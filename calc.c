@@ -21,7 +21,7 @@ main(int argc, char **argv)
 		sscanf(argv[1], "%x", &data);
 	}
 
-	printf("\n%ld = %#lx\n\n",
+	printf("\n%u = %#x\n\n",
 			data,
 			data);
 
