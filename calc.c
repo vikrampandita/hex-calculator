@@ -1,9 +1,10 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TYPE unsigned int
+#define TYPE unsigned long
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	TYPE data, i, j, k;
 	char bits[9];
@@ -11,34 +12,40 @@ main(int argc, char **argv)
 	bits[8] = 0;
 
 	if (argc != 2) {
-		printf("usage: hex [0x]ZZZZYYYY\n");
+		printf("usage: a.out 0xZZZZYYYY\n");
 		return -1;
 	}
 
-	if (argv[1][0] == '0' && argv[1][1] == 'x') {
-		sscanf(argv[1], "0x%x", &data);
-	} else {
-		sscanf(argv[1], "%x", &data);
-	}
+	if (argv[1][0] == '0' && argv[1][1] == 'x')
+		sscanf(argv[1], "0x%lx", &data);
+	else
+		sscanf(argv[1], "%lx", &data);
+		//for dec:
+		//sscanf(argv[1], "%lu", &data);
 
-	printf("\n%u = %#x\n\n",
+	printf("\n%lu = %#lx\n\n",
 			data,
 			data);
 
-	i = 32;
+	i = 64;
 	j = 0;
-	k = 3;
+	k = 7;
 	do {
-		if ( (i!=32) && !(i%8)) {
+		if ( (i!=64) && !(i%8)) {
 			j = 0;
-			printf("  0x%2x",(data & (0xff << (k*8))) >> (k*8));
+			printf("  0x%2lx",
+				((data & (((TYPE)0xff) << (k*8)))) >> (k*8)
+				) ;
 			k--;
 			printf("  %s", bits);
 			printf("\n");
+
+			if (k==3)
+				printf("\n");
 		}
 
-		if (data & (1 << (i - 1))) {
-			printf("%2d ", i - 1);
+		if (data & (((TYPE)1) << (i - 1))) {
+			printf("%2lu ", i - 1);
 			bits[j++] = '1';
 		} else {
 			printf("-- ");
@@ -46,7 +53,7 @@ main(int argc, char **argv)
 		}
 		i--;
 	} while (i > 0);
-	printf("  0x%2x",(data & (0xff << (k*8))) >> (k*8), k);
+	printf("  0x%2lx",(data & (0xff << (k*8))) >> (k*8));
 	printf("  %s", bits);
 	printf("\n\n");
 }
