@@ -23,8 +23,11 @@ int main(int argc, char **argv)
 		//for dec:
 		//sscanf(argv[1], "%lu", &data);
 
-	printf("\n%lu = %#lx\n\n",
+	printf("\n(%lu B) (%lu KB) (%lu MB) (%lu GB) = %#lx\n\n",
 			data,
+			data/(1024),
+			data/(1024*1024),
+			data/(1024*1024*1024),
 			data);
 
 	i = 64;
